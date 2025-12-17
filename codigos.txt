@@ -1,0 +1,474 @@
+import React, { useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { 
+  Scan, 
+  Sparkles, 
+  Activity, 
+  Zap, 
+  MapPin, 
+  Clock, 
+  Instagram, 
+  MessageCircle, 
+  ChevronRight,
+  ArrowRight
+} from 'lucide-react';
+
+// --- GLOBAL STYLES & FONTS ---
+// Note: In a real project, import fonts via Next.js/Google Fonts
+// Fonts used: 'Cinzel' (Serif) & 'Manrope' (Sans)
+
+const GoldButton = ({ children, className = "" }) => (
+  <motion.button
+    whileHover={{ scale: 1.02, boxShadow: "0 0 20px rgba(212, 175, 55, 0.2)" }}
+    whileTap={{ scale: 0.98 }}
+    className={`px-8 py-3 border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0B1120] transition-all duration-500 uppercase tracking-widest text-xs font-bold rounded-sm ${className}`}
+  >
+    {children}
+  </motion.button>
+);
+
+const SectionHeading = ({ title, subtitle, align = "center" }) => (
+  <div className={`mb-16 ${align === "center" ? "text-center" : "text-left"}`}>
+    <motion.span 
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      className="text-[#D4AF37] text-xs tracking-[0.3em] uppercase font-bold mb-4 block"
+    >
+      {subtitle}
+    </motion.span>
+    <motion.h2 
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.1, duration: 0.8 }}
+      className="text-4xl md:text-5xl font-serif text-slate-100 leading-tight"
+    >
+      {title}
+    </motion.h2>
+    <div className={`h-[1px] w-24 bg-gradient-to-r from-[#D4AF37]/0 via-[#D4AF37] to-[#D4AF37]/0 mt-6 ${align === "center" ? "mx-auto" : ""}`} />
+  </div>
+);
+
+const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-[#0B1120]/90 backdrop-blur-md border-b border-white/5 py-4' : 'bg-transparent py-8'}`}>
+      <div className="container mx-auto px-6 flex justify-between items-center">
+        <div className="text-2xl font-serif text-white tracking-widest">
+          AURA<span className="text-[#D4AF37]">.</span>
+        </div>
+        
+        <div className="hidden md:flex space-x-12 text-xs tracking-widest font-medium text-slate-300">
+          {['Estética', 'Implantes', 'Tecnologia', 'O Studio'].map((item) => (
+            <a key={item} href="#" className="hover:text-[#D4AF37] transition-colors">{item.toUpperCase()}</a>
+          ))}
+        </div>
+
+        <button className="text-xs tracking-widest text-[#D4AF37] border-b border-[#D4AF37] pb-1 hover:opacity-80 transition-opacity">
+          AGENDAR AVALIAÇÃO
+        </button>
+      </div>
+    </nav>
+  );
+};
+
+const Hero = () => {
+  return (
+    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+      {/* Background Gradient */}
+      <div className="absolute inset-0 bg-[#0B1120]">
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#0B1120] via-[#0f172a] to-[#1e293b] opacity-80" />
+        {/* Abstract Light Glow */}
+        <div className="absolute top-[-10%] right-[-10%] w-[800px] h-[800px] bg-[#D4AF37] rounded-full blur-[180px] opacity-5" />
+      </div>
+
+      <div className="container mx-auto px-6 relative z-10 grid md:grid-cols-12 gap-12 items-center">
+        <div className="md:col-span-7 space-y-8">
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            transition={{ duration: 1 }}
+            className="inline-flex items-center space-x-2 border border-white/10 rounded-full px-4 py-2 bg-white/5 backdrop-blur-sm"
+          >
+            <Sparkles className="w-4 h-4 text-[#D4AF37]" />
+            <span className="text-xs text-slate-300 tracking-wider">ARQUITETOS DA AUTOESTIMA</span>
+          </motion.div>
+
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-5xl md:text-7xl font-serif text-white leading-[1.1]"
+          >
+            Seu sorriso é <br />
+            <span className="italic text-slate-400">sua assinatura.</span>
+          </motion.h1>
+
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-lg text-slate-400 max-w-lg font-light"
+          >
+            Odontologia digital de alta precisão onde a ciência encontra a arte. 
+            Harmonia facial e lentes de contato com acabamento de joalheria.
+          </motion.p>
+
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="pt-4"
+          >
+            <GoldButton>Descubra Sua Nova Versão</GoldButton>
+          </motion.div>
+        </div>
+
+        {/* Visual Hook - Abstract 3D/Macro */}
+        <div className="md:col-span-5 relative">
+           <motion.div 
+             initial={{ scale: 0.9, opacity: 0 }}
+             animate={{ scale: 1, opacity: 1 }}
+             transition={{ duration: 1.2 }}
+             className="relative aspect-[4/5] rounded-2xl overflow-hidden"
+           >
+             {/* Placeholder for High-End Portrait or 3D Scan */}
+             <img 
+               src="https://images.unsplash.com/photo-1618331835717-801e976710b2?q=80&w=1000&auto=format&fit=crop" 
+               alt="Artistic Abstract" 
+               className="object-cover w-full h-full opacity-60 grayscale hover:grayscale-0 transition-all duration-1000"
+             />
+             <div className="absolute inset-0 bg-gradient-to-t from-[#0B1120] to-transparent opacity-80" />
+           </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const TechStrip = () => {
+  const techs = [
+    { icon: Scan, title: "Scanner 3D Intraoral", sub: "Sem moldagens desconfortáveis" },
+    { icon: Activity, title: "Sedação Consciente", sub: "Relaxamento total durante o procedimento" },
+    { icon: Zap, title: "Laser Terapia", sub: "Cicatrização acelerada e indolor" },
+    { icon: Sparkles, title: "Design Digital (DSD)", sub: "Previsibilidade absoluta do resultado" },
+  ];
+
+  return (
+    <section className="bg-[#0B1120] border-y border-white/5 py-16">
+      <div className="container mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {techs.map((t, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              className="flex flex-col items-start group cursor-default"
+            >
+              <div className="p-3 rounded-full bg-white/5 border border-white/5 group-hover:border-[#D4AF37]/50 transition-colors mb-4">
+                <t.icon className="w-6 h-6 text-slate-300 group-hover:text-[#D4AF37] transition-colors" strokeWidth={1} />
+              </div>
+              <h3 className="text-white font-serif text-lg mb-2">{t.title}</h3>
+              <p className="text-slate-500 text-sm font-light">{t.sub}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const TreatmentCard = ({ title, desc, img, index }) => (
+  <motion.div 
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ delay: index * 0.2 }}
+    className="group relative h-[400px] rounded-2xl overflow-hidden cursor-pointer border border-white/10 hover:border-[#D4AF37]/50 transition-all duration-500"
+  >
+    <img src={img} alt={title} className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700" />
+    <div className="absolute inset-0 bg-gradient-to-t from-[#0B1120] via-[#0B1120]/50 to-transparent" />
+    
+    <div className="absolute bottom-0 left-0 p-8 w-full">
+      <div className="flex justify-between items-end">
+        <div>
+          <h3 className="text-2xl font-serif text-white mb-2 group-hover:text-[#D4AF37] transition-colors">{title}</h3>
+          <p className="text-slate-400 text-sm font-light max-w-[250px]">{desc}</p>
+        </div>
+        <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-[#D4AF37] group-hover:border-[#D4AF37] group-hover:text-[#0B1120] text-white transition-all">
+          <ArrowRight className="w-4 h-4" />
+        </div>
+      </div>
+    </div>
+  </motion.div>
+);
+
+const Treatments = () => {
+  return (
+    <section className="py-24 bg-[#0B1120]">
+      <div className="container mx-auto px-6">
+        <SectionHeading 
+          title="Menu de Arte Dental" 
+          subtitle="Procedimentos" 
+        />
+        
+        <div className="grid md:grid-cols-3 gap-8">
+          <TreatmentCard 
+            index={0}
+            title="Lentes de Porcelana"
+            desc="Facetas ultrafinas artesanais para transformar cor, forma e textura."
+            img="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=1000"
+          />
+          <TreatmentCard 
+            index={1}
+            title="Ortodontia Invisível"
+            desc="Alinhadores transparentes. Tecnologia que alinha sem comprometer a estética."
+            img="https://images.unsplash.com/photo-1506365069540-904bcc762636?auto=format&fit=crop&q=80&w=1000"
+          />
+          <TreatmentCard 
+            index={2}
+            title="Implantes Suíços"
+            desc="Reabilitação oral completa com titânio de grau médico e carga imediata."
+            img="https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&q=80&w=1000"
+          />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Custom Compare Slider Component
+const BeforeAfter = () => {
+  const [sliderPosition, setSliderPosition] = useState(50);
+
+  const handleDrag = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+    setSliderPosition((x / rect.width) * 100);
+  };
+
+  return (
+    <section className="py-24 bg-[#0B1120] overflow-hidden">
+      <div className="container mx-auto px-6">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div>
+            <SectionHeading 
+              align="left"
+              title="Harmonização Integrada" 
+              subtitle="Transformação" 
+            />
+            <p className="text-slate-400 font-light mb-8 leading-relaxed">
+              Não tratamos apenas dentes. Analisamos proporções áureas faciais, 
+              linha labial e tom de pele para criar um sorriso que ilumina todo o rosto.
+            </p>
+            <div className="flex space-x-8 border-l border-[#D4AF37] pl-6">
+              <div>
+                <span className="block text-3xl font-serif text-white mb-1">3D</span>
+                <span className="text-xs text-slate-500 uppercase tracking-wider">Planejamento</span>
+              </div>
+              <div>
+                <span className="block text-3xl font-serif text-white mb-1">24h</span>
+                <span className="text-xs text-slate-500 uppercase tracking-wider">Mockup em Boca</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Slider Area */}
+          <div 
+            className="relative w-full h-[500px] rounded-2xl overflow-hidden cursor-ew-resize select-none ring-1 ring-white/10"
+            onMouseMove={handleDrag}
+            onTouchMove={(e) => handleDrag(e.touches[0])}
+          >
+            {/* Image 2 (After) - Full Width Background */}
+            <img 
+              src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=1000&auto=format&fit=crop" 
+              alt="After" 
+              className="absolute inset-0 w-full h-full object-cover grayscale-0"
+            />
+            <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-md px-3 py-1 rounded text-xs text-white tracking-widest">DEPOIS</div>
+
+            {/* Image 1 (Before) - Clipped on top */}
+            <div 
+              className="absolute inset-0 w-full h-full overflow-hidden"
+              style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" 
+                alt="Before" 
+                className="absolute inset-0 w-full h-full object-cover grayscale" // Grayscale for dramatic effect on 'before'
+              />
+              <div className="absolute top-4 left-4 bg-black/50 backdrop-blur-md px-3 py-1 rounded text-xs text-white tracking-widest">ANTES</div>
+            </div>
+
+            {/* Slider Handle */}
+            <div 
+              className="absolute top-0 bottom-0 w-1 bg-[#D4AF37] cursor-ew-resize z-10"
+              style={{ left: `${sliderPosition}%` }}
+            >
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
+                <div className="flex space-x-[2px]">
+                  <div className="w-[1px] h-3 bg-slate-900"></div>
+                  <div className="w-[1px] h-3 bg-slate-900"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Experience = () => {
+  return (
+    <section className="py-24 bg-[#0f172a] relative">
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid md:grid-cols-2 gap-0 rounded-3xl overflow-hidden border border-white/5 bg-[#0B1120]">
+          <div className="p-12 md:p-20 flex flex-col justify-center">
+            <span className="text-[#D4AF37] text-xs tracking-[0.3em] uppercase font-bold mb-6">
+              A Experiência
+            </span>
+            <h2 className="text-4xl font-serif text-white mb-6">Conforto de Hotel Boutique</h2>
+            <p className="text-slate-400 mb-8 font-light leading-relaxed">
+              Esqueça o cheiro clínico e o barulho de consultório. No Aura Studio, 
+              cada detalhe foi pensado para seus sentidos.
+            </p>
+            <ul className="space-y-4 mb-8">
+              <li className="flex items-center space-x-4 text-slate-300">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                <span>Concierge Pessoal</span>
+              </li>
+              <li className="flex items-center space-x-4 text-slate-300">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                <span>Coffee Bar & Menu de Águas</span>
+              </li>
+              <li className="flex items-center space-x-4 text-slate-300">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                <span>Cadeiras com Massagem</span>
+              </li>
+            </ul>
+            <div>
+              <button className="text-white border-b border-white/20 pb-1 hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all text-sm tracking-widest uppercase">
+                Conheça o Espaço
+              </button>
+            </div>
+          </div>
+          <div className="relative h-[400px] md:h-auto">
+            <img 
+              src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1000&auto=format&fit=crop" 
+              alt="Interior" 
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-[#0B1120]/20" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Footer = () => {
+  return (
+    <footer className="bg-[#0B1120] pt-24 pb-8 border-t border-white/5">
+      <div className="container mx-auto px-6">
+        <div className="grid md:grid-cols-4 gap-12 mb-20">
+          <div className="md:col-span-1">
+            <div className="text-2xl font-serif text-white tracking-widest mb-6">
+              AURA<span className="text-[#D4AF37]">.</span>
+            </div>
+            <p className="text-slate-500 text-sm leading-relaxed">
+              Redefinindo a odontologia através da tecnologia, arte e excelência humana.
+            </p>
+          </div>
+          
+          <div>
+            <h4 className="text-white font-serif mb-6">Contato</h4>
+            <ul className="space-y-4 text-sm text-slate-400">
+              <li className="flex items-center space-x-3">
+                <MessageCircle className="w-4 h-4 text-[#D4AF37]" />
+                <span>(11) 99999-9999</span>
+              </li>
+              <li className="flex items-center space-x-3">
+                <MapPin className="w-4 h-4 text-[#D4AF37]" />
+                <span>Av. Faria Lima, 0000 - SP</span>
+              </li>
+              <li className="flex items-center space-x-3">
+                <Clock className="w-4 h-4 text-[#D4AF37]" />
+                <span>Seg - Sex: 9h às 19h</span>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-white font-serif mb-6">Links</h4>
+            <ul className="space-y-2 text-sm text-slate-500">
+              <li className="hover:text-[#D4AF37] cursor-pointer transition-colors">Tratamentos</li>
+              <li className="hover:text-[#D4AF37] cursor-pointer transition-colors">O Studio</li>
+              <li className="hover:text-[#D4AF37] cursor-pointer transition-colors">Protocolo Aura</li>
+              <li className="hover:text-[#D4AF37] cursor-pointer transition-colors">Imprensa</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-white font-serif mb-6">Social</h4>
+            <div className="flex space-x-4">
+              <a href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all">
+                <Instagram className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-600">
+          <p>&copy; 2024 Aura Dental Studio. Todos os direitos reservados.</p>
+          <div className="flex space-x-6 mt-4 md:mt-0">
+            <span>Privacidade</span>
+            <span>Termos</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+const WhatsAppButton = () => (
+  <motion.a
+    href="#"
+    initial={{ opacity: 0, scale: 0 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ delay: 2 }}
+    whileHover={{ scale: 1.1 }}
+    className="fixed bottom-8 right-8 z-50 bg-[#D4AF37] text-[#0B1120] p-4 rounded-full shadow-[0_0_30px_rgba(212,175,55,0.3)] flex items-center justify-center"
+  >
+    <MessageCircle className="w-6 h-6" />
+  </motion.a>
+);
+
+const App = () => {
+  return (
+    <div className="bg-[#0B1120] min-h-screen font-sans selection:bg-[#D4AF37] selection:text-[#0B1120]">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Manrope:wght@200;400;600&display=swap');
+        .font-serif { font-family: 'Cinzel', serif; }
+        .font-sans { font-family: 'Manrope', sans-serif; }
+      `}</style>
+      
+      <Navbar />
+      <Hero />
+      <TechStrip />
+      <Treatments />
+      <BeforeAfter />
+      <Experience />
+      <Footer />
+      <WhatsAppButton />
+    </div>
+  );
+};
+
+export default App;
