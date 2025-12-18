@@ -116,7 +116,7 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-lg text-slate-400 max-w-lg font-light"
           >
-            Odontologia digital de alta precisão onde a ciência encontra a arte. 
+            Psicologia com abordagem humanizada onde a ciência encontra a arte. 
             Harmonia facial e lentes de contato com acabamento de joalheria.
           </motion.p>
 
@@ -214,7 +214,7 @@ const Treatments = () => {
     <section className="py-24 bg-[#0B1120]">
       <div className="container mx-auto px-6">
         <SectionHeading 
-          title="Menu de Arte Dental" 
+          title="Menu de Serviços" 
           subtitle="Procedimentos" 
         />
         
@@ -383,7 +383,7 @@ const Footer = () => {
               AURA<span className="text-[#D4AF37]">.</span>
             </div>
             <p className="text-slate-500 text-sm leading-relaxed">
-              Redefinindo a odontologia através da tecnologia, arte e excelência humana.
+              Redefinindo a psicologia através da escuta, arte e excelência humana.
             </p>
           </div>
           
@@ -426,7 +426,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-600">
-          <p>&copy; 2024 Aura Dental Studio. Todos os direitos reservados.</p>
+          <p>&copy; 2024 Laila Santos Psicologia. Todos os direitos reservados.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <span>Privacidade</span>
             <span>Termos</span>
